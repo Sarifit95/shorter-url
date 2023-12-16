@@ -5,7 +5,7 @@ SHORTER URL</p>
 
 ## About 
 
-Public user create shortener Url by log url . 
+Public user create shortener Url by long url . 
 User Registration and Login .
 If User Login then every shortener url Store  and user can delete or update.
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GetUrlRequest;
 use App\Http\Requests\UrlCeateRequest;
 use App\Models\Url;
 use App\Services\HomeService;
@@ -37,5 +38,8 @@ class HomeController extends Controller
       return $this->homeServices->redirectURL($id);
     }
 
-
+    public function createShortUrl(GetUrlRequest $request)
+    {
+        return $this->homeServices->createShortUrl($request);
+    }
 }

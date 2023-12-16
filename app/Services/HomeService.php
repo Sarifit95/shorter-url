@@ -4,6 +4,7 @@ namespace App\Services;
 
 
 
+use App\Http\Traits\HttpResponses;
 use App\Models\Url;
 use Exception;
 
@@ -12,7 +13,7 @@ use Exception;
 class HomeService
 {
 
-
+use HttpResponses;
 
     public  function  home(){
         try {
@@ -74,6 +75,7 @@ class HomeService
         }
     }
 
+
     public  function  getURL($id){
         try {
 
@@ -129,6 +131,40 @@ class HomeService
     }
 
 
+    public  function  createShortUrl($r){
+        try {
 
+            $userId= isset(auth()->user()->id) ? auth()->user()->id : null;
+
+            $url=Url::where('original_url',$r->url)
+                ->where('user_id', $userId)->first();
+
+            if (!$url){
+                $url= new Url();
+                $url->original_url=$r->url;
+                $url->shortener_url=$r->url;
+                $url->user_id=$userId;
+                $url->save();
+                $url->shortener_url=url('/tinyurl/'.$url->id);
+                $url->save();
+            }
+
+            $notification = array(
+                'original_url' => $url->original_url,
+                'shortener_url' => $url->shortener_url,
+
+            );
+            return $this->sendResponse($notification, 'successfullly generate short url');
+
+
+
+
+        } catch (Exception  $e) {
+
+            return $this->sendError('Exception Error', ['error' => $e->getLine() . "--" . $e->getMessage()], 500);
+
+
+        }
+    }
 
 }
