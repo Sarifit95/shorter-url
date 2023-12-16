@@ -11,7 +11,6 @@ If User Login then every shortener url Store  and user can delete or update.
 
 
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
 ## Setup for install
 1. create database short_url.
